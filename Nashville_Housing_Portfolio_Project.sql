@@ -23,7 +23,6 @@ set SaleDateConverted = CONVERT(Date,SaleDate)
 
 select *
 from CleaningPortfolioProject.dbo.NashvilleHousing
---Where PropertyAddress is null
 order by ParcelID
 
 select a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, ISNULL(a.PropertyAddress, b.PropertyAddress)
@@ -47,13 +46,10 @@ Where a.PropertyAddress is null
 
 select PropertyAddress
 from CleaningPortfolioProject.dbo.NashvilleHousing
---Where PropertyAddress is null
---order by ParcelID
 
 Select
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 ) as Address
 , SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1, LEN(PropertyAddress)) as Address
-
 from CleaningPortfolioProject.dbo.NashvilleHousing
 
 ALTER TABLE NashvilleHousing
@@ -75,17 +71,11 @@ select OwnerAddress
 from CleaningPortfolioProject.dbo.NashvilleHousing
 
 
-
 select
 PARSENAME(REPLACE(OwnerAddress,',','.'), 3)
 ,PARSENAME(REPLACE(OwnerAddress,',','.'), 2)
 ,PARSENAME(REPLACE(OwnerAddress,',','.'), 1)
 from CleaningPortfolioProject.dbo.NashvilleHousing
-
-
-
-
-
 
 
 
@@ -151,15 +141,12 @@ select *,
 					) row_num
 
 from CleaningPortfolioProject.dbo.NashvilleHousing
---order by ParcelID
 )
 -- DELETE
 select *
 from RowNumCTE
 where row_num > 1
 order by PropertyAddress
-
-
 
 
 select*
