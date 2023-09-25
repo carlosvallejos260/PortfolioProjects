@@ -3,10 +3,6 @@ from PortfolioProject..CovidDeaths
 where continent is not null
 order by 3,4
 
---select *
---from PortfolioProject..CovidVaccinations
---order by 3,4
-
 Select Location, date, total_cases, new_cases, total_deaths, population
 from PortfolioProject..CovidDeaths
 order by 1,2
@@ -19,7 +15,7 @@ Where location like '%states%'
 order by 1,2
 
 -- Looking at the total cases vs. the population (of Canada in this case)
--- Shows percentage of population got Covid
+-- Shows percentage of population that contracted Covid
 Select Location, date, total_cases,population, (CONVERT(float, total_cases) / population) * 100 AS InfectionPercentage
 from PortfolioProject..CovidDeaths
 Where location like '%canada%'
@@ -79,13 +75,11 @@ join PortfolioProject..CovidVaccinations vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 where dea.continent is not null
---order by 2,3
 )
 Select *, (RollingPeopleVaccinated/population) * 100 AS PopulationVaccinatedPercentage
 from PopvsVac
 
 -- TEMP TABLE
-
 DROP Table if exists #PercentPopulationVaccinated
 Create Table #PercentPopulationVaccinated
 (
@@ -104,8 +98,6 @@ from PortfolioProject..CovidDeaths dea
 join PortfolioProject..CovidVaccinations vac
 	on dea.location = vac.location
 	and dea.date = vac.date
---where dea.continent is not null
---order by 2,3
 
 Select *, (RollingPeopleVaccinated/population) * 100 AS PopulationVaccinatedPercentage
 from #PercentPopulationVaccinated
@@ -119,7 +111,6 @@ join PortfolioProject..CovidVaccinations vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 where dea.continent is not null
---order by 2,3
 
 Select *
 From PercentPopulationVaccinated
